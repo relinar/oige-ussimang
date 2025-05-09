@@ -6,25 +6,43 @@
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body>
- 
-<h1>Snake Game</h1>
-<div class="game-container">
-  <canvas id="gameCanvas" width="1000" height="1000"></canvas>
-  <div id="shop">
-    <h2>Power-Up Shop</h2>
-    <div class="powerup" id="invincible-powerup">
-      <p>🛡️</p>
-      <p>Invincibility (5s)</p>
-      <p>Cost: 5 coins</p>
-      <button onclick="buyPowerup('invincible')">Buy</button>
+
+  <h1>Snake Game</h1>
+  <div class="game-container">
+    <canvas id="gameCanvas" width="1000" height="750"></canvas>
+    <div id="shop">
+      <h2>Power-Up Shop</h2>
+
+      <div class="powerup" id="invincible-powerup">
+        <p>🛡️</p>
+        <p>Invincibility (5s)</p>
+        <p>Cost: 5 coins</p>
+        <button onclick="buyPowerup('invincible')">Buy</button>
+      </div>
+
+      <div class="powerup" id="redsnake-powerup">
+        <p>🐍</p>
+        <p>Red Snake</p>
+        <p>Cost: 10 coins</p>
+        <button onclick="buyPowerup('redsnake')">Buy</button>
+      </div>
+
+      <div class="powerup" id="slowsnake-powerup">
+        <p>🐢</p>
+        <p>Slow Snake (10s)</p>
+        <p>Cost: 15 coins</p>
+        <button onclick="buyPowerup('slowsnake')">Buy</button>
+      </div>
+      
+
     </div>
   </div>
-</div>
-<div class="game-info">
-  <div id="score">Errors: 0</div>
-  <div id="coins">Coins: 0</div>
-</div>
- 
-<script type="text/javascript" src="game.js"></script>
+
+  <div class="game-info">
+    <div id="score">Errors: 0</div>
+    <div id="coins">Coins: 0</div>
+  </div>
+
+  <script type="text/javascript" src="game.js"></script>
 </body>
 </html>

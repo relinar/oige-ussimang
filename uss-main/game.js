@@ -132,16 +132,18 @@ snake = {
       let ateFood = foodManager.checkCollision(newX, newY);
       if (ateFood) {
         game.score++;
-        if (game.fps < 30) game.fps++;
- 
+      
+        // Removed game.fps++ to avoid snake speeding up
+      
         if (game.score % 10 === 0) {
           foodManager.increaseFoodCount();
         }
- 
+      
         foodManager.set();
       } else {
         snake.sections.pop();
       }
+      
  
       if (snake.sections.length > 1) {
         snake.sections[snake.sections.length - 1].type = 'tail';
@@ -156,13 +158,14 @@ snake = {
       let flipX = false;
       let flipY = false;
       let rotation = 0;
- 
-      if (game.score >= 10) {
-        context.filter = 'saturate(3) hue-rotate(-120deg)';
+  
+      // ✅ Apply red tint ONLY if bought from shop
+      if (game.powerups.redSnake) {
+        context.filter = 'saturate(3) hue-rotate(-120deg)'; // Red
       } else {
         context.filter = 'none';
       }
-
+  
       switch (part.type) {
         case 'head':
           img = snake.headImage;
@@ -173,7 +176,7 @@ snake = {
           }
           snake.drawRotatedImage(img, part.x, part.y, flipX, flipY, rotation);
           break;
- 
+  
         case 'body':
           img = snake.bodyImage;
           const prev = snake.sections[i - 1];
@@ -185,7 +188,7 @@ snake = {
           else if (dy > 0) { rotation = 90; }
           snake.drawRotatedImage(img, part.x, part.y, flipX, flipY, rotation);
           break;
- 
+  
         case 'tail':
           img = snake.tailImage;
           if (i > 0) {
@@ -200,11 +203,11 @@ snake = {
           snake.drawRotatedImage(img, part.x, part.y, flipX, flipY, rotation);
           break;
       }
-
+  
       context.filter = 'none';
     }
   },
- 
+  
   drawRotatedImage: function (image, x, y, flipX, flipY, rotation) {
     context.save();
     context.translate(x, y);
@@ -282,19 +285,35 @@ foodManager = {
   }
 };
  
-// Shop and Powerup Functions
 function buyPowerup(type) {
   if (game.over) return;
-  
-  const cost = 5;
-  if (game.coins >= cost) {
-    game.coins -= cost;
+
+  if (type === 'redsnake' && game.coins >= 10) {
+    game.coins -= 10;
     updateCoinsDisplay();
-    
-    if (type === 'invincible') {
-      game.powerups.invincible = true;
-      game.powerups.invincibleEndTime = Date.now() + 5000;
-    }
+    game.powerups.redSnake = true;
+  }
+  else if (type === 'invincible' && game.coins >= 5) {
+    game.coins -= 5;
+    updateCoinsDisplay();
+    game.powerups.invincible = true;
+    game.powerups.invincibleEndTime = Date.now() + 5000; // 5 seconds of invincibility
+  }
+  else if (type === 'slowsnake' && game.coins >= 15) {
+    game.coins -= 15;
+    updateCoinsDisplay();
+    game.slowSnake = true;
+    game.slowSnakeEndTime = Date.now() + 10000; // 10 seconds
+  }
+  
+}
+
+
+
+function updateCoinsDisplay() {
+  const coinsElement = document.getElementById('coins');
+  if (coinsElement) {
+    coinsElement.textContent = 'Coins: ' + game.coins;
   }
 }
 
@@ -377,6 +396,7 @@ function loop() {
     context.fillText('INVINCIBLE: ' + timeLeft + 's', canvas.width / 2, canvas.height - 20);
     context.strokeText('INVINCIBLE: ' + timeLeft + 's', canvas.width / 2, canvas.height - 20);
 }
+
 
   setTimeout(function () {
     requestAnimationFrame(loop);

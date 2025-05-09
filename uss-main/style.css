@@ -115,10 +115,10 @@ canvas {
   font-family: 'Fira Code', monospace;
 }
 
-/* Responsive for mobile devs :) */
 @media screen and (max-width: 600px) {
   canvas {
-    width: 90vw;
+    width: vw;
     height: 90vw;
   }
 }
+
