@@ -1,16 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8" />
-  <title>Snake Game</title>
-  <link rel="stylesheet" href="style.css" type="text/css">
+<meta charset="utf-8" />
+<title>Snake Game</title>
+<link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body>
-
-  <h1>Snake Game</h1>
+ 
+<h1>Snake Game</h1>
+<div class="game-container">
   <canvas id="gameCanvas" width="1000" height="1000"></canvas>
+  <div id="shop">
+    <h2>Power-Up Shop</h2>
+    <div class="powerup" id="invincible-powerup">
+      <p>🛡️</p>
+      <p>Invincibility (5s)</p>
+      <p>Cost: 5 coins</p>
+      <button onclick="buyPowerup('invincible')">Buy</button>
+    </div>
+  </div>
+</div>
+<div class="game-info">
   <div id="score">Errors: 0</div>
-
-  <script type="text/javascript" src="game.js"></script>
+  <div id="coins">Coins: 0</div>
+</div>
+ 
+<script type="text/javascript" src="game.js"></script>
 </body>
 </html>
